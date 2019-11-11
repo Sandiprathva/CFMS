@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "ShowMemaber";
+}
+<div class="loader"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(".btn").click(function () {
+        $(".loader").fadeOut("slow");
+    });
+</script>
+
+<div ng-app="RegScerpatryReq" ng-controller="ReqScerpatryController">
+    <div class="container ">
+        @*<div class="shadow  bg-white">*@
+        <div class="card card-primary border-primary">
+            <div class="card-header bg-primary text-white"> Request For Membership of Group </div>
+            <div class="card-body">
+                <div class="col-md-4 float-md-right" style="margin-bottom:10px;"><input type="text" placeholder="Search..." class="form-control" ng-model="test"></div>
+
+                <table class="table table-striped table-responsive-md">
+                    <thead class="bg-warning">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Group Name</th>
+                            <th>Address</th>
+                            <th>E-mail</th>
+
+                            <th>Mobile Number</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="k in Mem | filter : test">
+                            <td>{{$index+1 }}</td>
+
+                            <td>{{k.name}}</td>
+                            <td>@Session["GNAME"].ToString()</td>
+                            <td>{{k.addr}}</td>
+                            <td>{{k.email}}</td>
+                            <td>{{k.monum}}</td>
+                            <td>
+
+                                <button type="submit" ng-click="AppMembar(k)" class="btn btn-primary">
+                                    Accept
+                                    @*<span ng-show="spin.kk==true">
+                                            <i class="fa fa-check fa-spinner fa-spin"></i>
+                                        </span>Accept*@
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" ng-click="RejectMembar(k)" class="btn btn-danger">Reject</button>
+
+                            </td>
+                        </tr>
+                    <tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    @*</div>*@
+</div>
+
+

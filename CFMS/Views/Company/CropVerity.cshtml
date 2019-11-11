@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "CropVerity";
+}
+
+
+
+
+@*@{
+        ViewBag.Title = "AddregItem";
+    }
+    <div class="loader"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(".btn").click(function () {
+            $(".loader").fadeOut("slow");
+        });
+    </script>*@
+<div ng-app="AddItem" ng-controller="AddItemUSerController" data-ng-init="init()">
+    <form enctype="multipart/form-data" name="ItemFrom" novalidate>
+        <div class="container col-md-5 offset-md-3">
+            <div class="shadow p-4 mb-4 bg-white">
+                <div class="card card-primary border-primary">
+                    <div class="card-header bg-primary text-white">
+
+                        <div class="float-left">Add Varity </div>
+                        <div class="float-right ">
+                            <span>
+                                <i class="fa fa-leaf fa-spin" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group row" style="margin-left:10px;">
+                            <div ng-repeat="user in Itype" ng-show="user.type=='Seed'">
+                                <input type="radio" name="ItypeId" ng-checked="user.ItypeId==1" data-ng-model="$parent.Varity.ItypeId" required data-ng-value="user.ItypeId"
+                                       ng-init="$index==0?($parent.Varity.ItypeId=user.ItypeId):''" />{{user.type}}
+                            </div>
+                            @*<span ng-show="ItemFrom.ItypeId.$dirty && ItemFrom.ItypeId.$error.required" class="text-danger">Select radio button!</span>*@
+
+
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Crop Name:</label>
+
+                            <select class="custom-select" ng-model="Varity.cpid" required ng-hide="btnn=='Update'">
+                                <option value="" selected>-- Select Crop Name /Item Name --</option>
+                                <option ng-repeat="st in san | filter : ItemMasert.ItypeId" value="{{st.cpid}}">{{st.cpname}}</option>
+                            </select>
+                            <input type="text" ng-show="btnn=='Update'" class="form-control" ng-model="cpnm" readonly />
+
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="email">Varity Name :</label>
+                            <input type="text" ng-model="Varity.verity" name="price" placeholder="Varity Name" class="form-control" required ng-blur="CropVaritExit()">
+                            @*<span ng-show="ItemFrom.price.$dirty && ItemFrom.price.$error.required" class="text-danger">Item Price is Required !</span>*@
+                            @*<span ng-show="ItemFrom.price.$dirty && ItemFrom.price.$error.pattern" class="text-danger">Must be allowd numbers only and minimum 2 digit allowed!</span>*@
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" ng-disabled="ItemFrom.$invalid" class="btn btn-success" ng-click="AddVerity(Varity)"><i class="far fa-check-circle"></i> {{btnn}}</button>
+                        <button type="submit" class="btn btn-danger" ng-click="Varity.verity=null "><i class="far fa-times-circle"></i> Cancel</button>
+
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-responsive-md" style="width:100%">
+                <thead class="bg-warning">
+                    <tr>
+                        <th>No</th>
+                        <th>Crop Name</th>
+                        <th>Varity Name</th>
+                        <th></th>
+                        <th></th>
+
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="var in GetVar | filter: ItemMasert.ItypeId">
+                        <input type="hidden" value="{{var.varid}}" />
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{var.cpname}}</td>
+                        <td>{{var.verity}}</td>
+
+                        <td>
+                            <button type="button" ng-click="getCropvarityEdit(var)" class="btn btn-PR">
+                                <i class="far fa-edit"></i>
+
+                            </button>
+
+                        </td>
+                        <td>
+
+
+                            <button type="button" ng-click="deletteCropVarity(var)" class="btn btn-danger">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+
+
+
+
+
+                        </td>
+                    </tr>
+                <tbody>
+            </table>
+        </div>
+
+</form>
+</div>

@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+<div class="loader"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(".btn").click(function () {
+        $(".loader").fadeOut("slow");
+    });
+</script>
+<div ng-app="UserLogin" ng-controller="UserLOG">
+    <form name="login" novalidate>
+        <div class="container col-md-5 offset-md-3">
+            <div class="shadow p-4 mb-4 bg-white">
+                <div class="card card-primary border-success">
+                    <div class="card-header bg-success text-white">
+
+                        <div class="float-left">Login</div>
+                        <div class="float-right "><span> <i class="fas fa-key"></i></span><a href="/Home/Forgotpass/" class="text-white">Forgot password</a></div>
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+
+                            @*<div class="alert alert-danger alert-dismissible" ng-show="ms.fiel== true">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ms}} </strong>
+                                </div>*@
+                            <div ng-show="ms.fiel==true" class="text-center text-danger"><p>{{mss}}</p></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Mobile Number:</label>
+                            <input type="text" ng-model="Registration.monum" placeholder="Enter Mobile Number" name="mo" class="form-control" required pattern="^[6-9]\d{9}$" maxlength="10">
+                            <span ng-show="login.mo.$dirty && login.mo.$error.pattern" class="text-danger">Mobile Number is Not valid try agin .</span>
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="name">Password:</label>
+                            <input type="password" ng-model="Registration.pass" placeholder="Enter Password" class="form-control" name="pass" required>
+                            @*<span ng-show="login.pass.$dirty && login.pass.$error.required" class="text-danger">Password is Required</span>*@
+
+                        </div>
+                        <div class="form-group row">
+                            <span for="name" class="badge col-md-3 p-2" style="margin-right:10px;margin-left:10px;font-size:20px;background:#fff0b3;"><labale na-model="DaImg" onselectstart="return false;" onmousedown='return false;' onmouseup="return false;" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off value="{{DaImg}}"><b class="text-danger">{{DaImg}}</b></labale></span>
+                            <input type="text" class="form-control col-md-3" placeholder="Enter Captcha" name="cp" ng-model="cmp" style="margin-right:10px;" />
+
+                            <button class="btn btn-primary" ng-click="cpclick()">
+                                <i  class="fas fa-sync fa-spin fa-1x"></i>
+                            </button>
+                            <span class="text-danger" ng-show="login.cp.$dirty && cmp!=DaImg">
+                                Captcha Dose Not Match !
+                            </span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="float-right "><a href="/Home/Registraionall/" class="text-info">New Sign Up?</a></div>
+
+                        </div>
+
+                        @*<div class="modal" align="center" ng-show="ShowLoader==true">
+                            <br /><br />Loading. Please wait.<br /><br />
+                            <img src="~/img/giphy.gif" alt="Loading. Please wait." />
+                        </div>*@
+
+                        <div class="form-group col-md-6 offset-md-3">
+                            <button type="submit" ng-click="Loginuser()" ng-disabled="login.$invalid || cmp!=DaImg" class="btn btn-success"><i ng-show="ShowLoader==false" class="fas fa-sign-in-alt"></i> <i ng-show="ShowLoader==true" class="fa fa-spinner"></i> Login</button>
+                            <button type="submit" class="btn btn-danger" ng-click="Registration=null"><i class="far fa-times-circle"></i>  Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+

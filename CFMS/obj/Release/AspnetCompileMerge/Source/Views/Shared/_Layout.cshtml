@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @*<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <script src="~/Scripts/modernizr-2.8.3.js"></script>*@
+
+    <link href="~/BS4/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="~/BS4/angular.min.js"></script>
+    <script src="~/BS4/angular-upload.js"></script>
+    <script src="~/BS4/popper.min.js"></script>
+    <script src="~/BS4/jquery.min.js"></script>
+    <script src="~/BS4/bootstrap.min.js"></script>
+    <script src="~/MyJSFile/RegistrationController.js"></script>
+    <script src="~/fontosome/all.js"></script>
+
+</head>
+<body>
+
+    
+    <div class="container visible-xs-block visible-md-block visible-sm-block">
+    <div class="row " style="margin-bottom:5px;margin-top:10px;">
+        <div class="col-md-12 text-success ">
+            <div style="float:left">
+                <img src="~/img/inde.jpg" class="img-responsive" width="80px" height="80px" />
+            </div>
+            <div style="float:left;margin-top:10px;">
+                <br><p class="col-md-12 text-md-center"> Co-Operative Farming  Management System</p>
+            </div>
+            <div style="float:right;">
+                <a href="http://www.aau.in/"><img src="~/img/aau.gif" class="img-responsive" width="80px" height="80px"></a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <nav class="navbar navbar-expand-md bg-primary navbar-dark">
+        <a class="navbar-brand" href="/Home/Index/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav mr-auto">
+                @*<li><a class=" nav-link text-white" href="/Home/Registraionall/">Rgistration</a></li>*@
+
+
+
+                @*<li><a class=" nav-link text-white" href="/FarmerMem/Quetion/">Qution</a></li>*@
+                @if (Session["UTYPE"] != null)
+                {
+                    if (Session["UTYPE"].ToString() == "NewGroup")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/Secretary/ShowMemaber/">Memaber</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/Secretary/ShowMemabersp/">SubmitCrop</a>
+                        </li>
+                    }
+                    if (Session["UTYPE"].ToString() == "Admin")
+                    {
+                        <li class="nav-item">
+                            <a class=" nav-link text-white" href="/Home/ItemTypeAdd/">ItemType</a>
+                        </li>
+                        <li><a class=" nav-link text-white" href="/Home/DisplayReg/">DisplayReg</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/Secretary/ReportDetalis/">Report</a>
+                        </li>
+                    }
+                    if (Session["UTYPE"].ToString() == "Company" || Session["UTYPE"].ToString() == "NewGroup")
+                    {
+                        <li><a class=" nav-link text-white" href="/Company/RegItem/">Add Item</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/Secretary/Show/">Show Item</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/Secretary/ShowSellingItem/">Buy Item</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/Secretary/ReportDetalis/">Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/Company/CartShow/"><i class="fas fa-shopping-cart"></i><span class="badge badge-pill badge-warning" style="vertical-align: top;"> @Session["noti"]</span> </a>
+                        </li>
+                    }
+                    if (Session["UTYPE"].ToString() == "Member")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/Secretary/MemDetail/">Submit Crop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/Secretary/GetMembarReq/">Requirement</a>
+                        </li>
+
+                    }
+
+
+                }
+
+
+
+            </ul>
+            <ul class="nav navbar-nav ">
+                @if (Session["UNAME"] != null)
+                {
+                    if (Session["UTYPE"].ToString() == "Member")
+                    {
+                        <span class='navbar-text text-white'>@Session["GNAME"].ToString() @Session["UTYPE"].ToString()<a href="@Url.Action("ProfileUser", "Home")"> <font color=Red> @Session["UNAME"].ToString()</font></a></span>
+
+                    }
+                    else
+                    {
+                      <span class='navbar-text text-white'>@Session["GNAME"].ToString()<a href="@Url.Action("ProfileUser", "Home")"> <font color=Red> @Session["UNAME"].ToString()</font></a></span>
+
+                    }
+                    <li><a href="/Home/Logout/" class="nav-link text-white"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+                }
+                else
+                {
+                    <li><a class="nav-link text-white" href="/Home/Login/"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                }
+
+            </ul>
+        </div>
+    </nav>
+
+
+    </div>
+
+    <div class="container body-content visible-xs-block visible-md-block visible-sm-block" style="margin-top:10px;">
+        @RenderBody()
+        <hr />
+        <footer class="bg-primary" style="padding:10px;">
+            <h5 class="text-center text-white">Devloped By Sandip Rathva</h5>
+        </footer>
+    </div>
+    @*<script src="~/BS4/jquery.min.js"></script>
+    <script src="~/BS4/bootstrap.min.js"></script>*@
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>*@
+</body>
+</html>

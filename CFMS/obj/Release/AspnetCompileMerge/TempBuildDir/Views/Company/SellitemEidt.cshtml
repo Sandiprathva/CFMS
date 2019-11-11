@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "SellitemEidt";
+}
+
+<h2>SellitemEidt</h2>
+
+
+<div ng-app="ShowItem" ng-controller="ShowItemController" data-ng-init="Item()">
+   
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" ng-model="ItemMasert.name" placeholder="Name" class="form-control">
+    </div>
+
+
+    <label for="Group Name">Image:</label>
+    <div class="custom-file">
+        <input name="img" ngf-select ng-model="ItemMasert.img" type="file" class="custom-file-input" onchange="angular.element(this).scope().uploadedFile(this)" />
+
+        @*<input type="file"  ngf-select name="img"  ng-model="ItemMasert.img" class="custom-file-input" onchange="angular.element(this).scope().uploadedFile(this)">*@
+        <label class="custom-file-label" for="customFile">Choose file</label>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col-md-6 ">
+            <label for="Address">Quantity</label>
+            <input type="text" ng-model="ItemMasert.qty" placeholder="Quantity per bage 30 kg" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label for="email">Price 1</label>
+            <input type="text" ng-model="ItemMasert.price" placeholder="Price in Rs per 30 kg" class="form-control">
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" @*ng-disabled="ItemFrom.$invalid"*@ class="btn btn-primary" ng-click="ItemEdite(ItemMasert)">Submit</button>
+      
+    </div>
+</div>

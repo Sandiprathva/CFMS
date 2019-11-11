@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "SellitemEidt";
+}
+<div class="loader"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(".btn").click(function () {
+        $(".loader").fadeOut("slow");
+    });
+</script>
+<div ng-app="ShowItem" ng-controller="ShowItemController" data-ng-init="Item()">
+    <div class="container col-md-6 offset-md-3">
+        <div class="shadow p-4 mb-4 bg-white">
+            <div class="card card-primary border-primary">
+                <div class="card-header bg-primary text-white"> Edit Item </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" name="cname" placeholder="Name" class="form-control" value="@Session["cpnmm"].ToString()" readonly>
+                    </div>
+
+
+                    <label for="Group Name">Image:</label>
+                    <div class="custom-file">
+                        <input name="img" ngf-select ng-model="ItemMasert.img" type="file" class="custom-file-input" onchange="angular.element(this).scope().uploadedFile(this)" />
+
+                        @*<input type="file"  ngf-select name="img"  ng-model="ItemMasert.img" class="custom-file-input" onchange="angular.element(this).scope().uploadedFile(this)">*@
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-md-6 ">
+                            <label for="Address">Quantity</label>
+                            <input type="text" ng-model="ItemMasert.qty" placeholder="Quantity per bage 30 kg" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">Price 1</label>
+                            <input type="text" ng-model="ItemMasert.price" placeholder="Price in Rs per 30 kg" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" @*ng-disabled="ItemFrom.$invalid"*@ class="btn btn-primary" ng-click="ItemEdite(ItemMasert)"><i class="far fa-check-circle"></i> Submit</button>
+
+                        <a href="/Home/Index/" class="btn btn-danger" role="button"><i class="far fa-times-circle"></i> Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

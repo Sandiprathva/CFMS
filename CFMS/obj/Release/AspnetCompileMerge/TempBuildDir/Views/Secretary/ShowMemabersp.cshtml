@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "ShowMemabersp";
+}
+
+<h2>ShowMemabersp</h2>
+
+<div ng-app="RegScerpatryReq" ng-controller="ReqScerpatryController">
+    <div class="container ">
+        <div class="shadow  bg-white">
+            <div class="card card-primary border-primary">
+                <div class="card-header bg-primary text-white"> Item Add For specifice Memabar </div>
+                <div class="card-body">
+                    <div class="col-md-4 float-md-right" style="margin-bottom:10px;"><input type="text" placeholder="Search..." class="form-control" ng-model="test"></div>
+
+                    <table class="table table-striped">
+                        <thead class="bg-warning">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Group Name</th>
+                                <th>Address</th>
+                                <th>E-mail</th>
+
+                                <th>Mobile Number</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="k in Memm | filter : test">
+                                <td>{{ k.rid }}</td>
+
+                                <td>{{k.name}}</td>
+                                <td>@Session["GNAME"].ToString()</td>
+                                <td>{{k.addr}}</td>
+                                <td>{{k.email}}</td>
+                                <td>{{k.monum}}</td>
+                                <td>
+
+                                    <button type="submit" ng-click="ItemAdd(k)" class="btn btn-primary">
+                                        Item
+                                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" ng-click="DeleteMem(k)" class="btn btn-danger">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        <tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

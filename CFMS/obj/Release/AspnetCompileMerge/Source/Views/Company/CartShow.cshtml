@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "CartShow";
+}
+
+<h2>CartShow</h2>
+
+<div ng-app="ShowCart" ng-controller="ShowCartController">
+    <form name="cart">
+        <div class="container ">
+            <div class="shadow  bg-white">
+                <div class="card card-primary border-primary">
+                    <div class="card-header bg-primary text-white"> Add cart </div>
+                    <div class="card-body">
+                        <div class="col-md-4 float-md-right" style="margin-bottom:10px;"><input type="text" placeholder="Search..." class="form-control" ng-model="test"></div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="bg-warning">
+                                    <tr>
+                                        <th>Images</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Add</th>
+                                        <th>Quntity</th>
+                                        <th>minus</th>
+                                        <th>Total</th>
+                                        <th>Remove</th>
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+                                    <tr ng-repeat="a in Car | filter : test">
+                                        <td>
+                                            <img ng-src="~/UploadedItem/{{a.img}}" class="img-thumbnail img-fluid" style="width: 100px; height: 100px;" />
+                                        </td>
+
+                                        <td>{{a.name}}</td>
+                                        <td>{{a.price}}</td>
+                                        <td>{{a.qty}}</td>
+                                        <input type="hidden" ng-model="a.qtty" name="type" class="form-control" readonly>
+                                        <input type="hidden" ng-model="a.iid" name="type" class="form-control" readonly>
+                                        <td>
+
+                                            <button type="submit" ng-click="count=count+1;tot=a.price*count;AddItemCart(a,count)" ng-disabled="a.qt==a.qty" class="btn btn-success" data-ng-init="0">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                        <td><input type="text"  name="type" class="form-control" readonly ng-minlength="1" value="{{a.qt}}">
+                                        </td>
+
+                                        <td>
+                                            <button type="submit" ng-click="AddDecrementCart(a,count)" ng-disabled="a.qt==0|| a.qt==1" class="btn btn-primary">
+                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                        <td><input type="text" @*ng-model="tot"*@ name="abc" class="form-control" readonly value="{{a.amtot}}"></td>
+
+                                        <td>
+                                            <button type="button" ng-click="tot=a.price*count;CartRemove(a,tot)" class="btn btn-danger">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+
+                                <tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td colspan="2"><button type="submit" class="btn btn-success" ng-disabled="cart.$invalid || Disabled" ng-click="ConfrimOredr()" target="_blank"><i class="far fa-check-circle"></i> Order</button></td>
+                                        <td><button type="submit" class="btn btn-danger" ng-click="">Cancel</button></td>                 
+                                        <td  colspan="2">Total Amount {{ getTotal() }}</td>
+                                    </tr>
+                                    <tr>
+
+                                        <td colspan="2" ng-show="isDisabled==false" class="wrapper">
+                                            <a class="btn btn-primary" href="/Company/PrintBill/" target="_blank">
+                                                <i class="fa fa-print" aria-hidden="true"></i>
+                                                Print
+                                            </a>
+
+                                        </td>
+                                    </tr>
+
+                                <tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

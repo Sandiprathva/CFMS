@@ -1,0 +1,162 @@
+﻿
+@{
+    ViewBag.Title = "RegItem";
+}
+
+
+<div class="loader"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(".btn").click(function () {
+        $(".loader").fadeOut("slow");
+    });
+</script>
+<div ng-app="AddItem" ng-controller="AddItemUSerController" data-ng-init="init()">
+    <form enctype="multipart/form-data" name="ItemFrom" novalidate>
+        <div class="container col-md-5 offset-md-3">
+            <div class="shadow p-4 mb-4 bg-white">
+                <div class="card card-primary border-primary">
+                    <div class="card-header bg-primary text-white">
+
+                        <div class="float-left">Items</div>
+                        <div class="float-right ">
+                            <span>
+                                <i class="fa fa-leaf fa-spin" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group row" style="margin-left:10px;">
+                            @if (Session["UTYPE"].ToString() != "NewGroup")
+                            {
+                                <div class="form-group row" style="margin-left:10px;">
+                                    <div ng-repeat="user in Itype" ng-show="user.type=='Seed'">
+                                        <input type="radio" name="ItypeId" ng-checked="user.ItypeId==1" data-ng-model="$parent.ItemMasert.ItypeId" required data-ng-value="user.ItypeId"
+                                               ng-init="$index==0?($parent.ItemMasert.ItypeId=user.ItypeId):''" />{{user.type}}
+                                    </div>
+                                    @*<span ng-show="ItemFrom.ItypeId.$dirty && ItemFrom.ItypeId.$error.required" class="text-danger">Select radio button!</span>*@
+
+
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-group row" style="margin-left:10px;">
+                                    <div ng-repeat="user in Itype">
+                                        <input type="radio" name="ItypeId" ng-checked="user.ItypeId==1" data-ng-model="$parent.ItemMasert.ItypeId" required data-ng-value="user.ItypeId"
+                                               ng-init="$index==0?($parent.ItemMasert.ItypeId=user.ItypeId):''" />{{user.type}}
+                                    </div>
+                                    @*<span ng-show="ItemFrom.ItypeId.$dirty && ItemFrom.ItypeId.$error.required" class="text-danger">Select radio button!</span>*@
+
+
+                                </div>
+                            }
+                            @*<div ng-repeat="user in Itype">
+                <input type="radio" name="ItypeId" ng-checked="user.ItypeId==1" data-ng-model="$parent.ItemMasert.ItypeId" required data-ng-value="user.ItypeId"
+                       ng-init="$index==0?($parent.ItemMasert.ItypeId=user.ItypeId):''" />{{user.type}}
+            </div>*@
+                            @*<span ng-show="ItemFrom.ItypeId.$dirty && ItemFrom.ItypeId.$error.required" class="text-danger">Select radio button!</span>*@
+
+
+                        </div>
+                        @if (Request.Cookies["Memid"] != null && Request.Cookies["Memname"] != null)
+                        {
+                            <div class="form-group">
+
+                                <label for="name">Id:</label>
+                                <input type="text" ng-readonly="true" class="form-control" value="@Request.Cookies["Memid"].Value.ToString()">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Membar Name:</label>
+                                <input type="text" placeholder="Name" class="form-control" value="@Request.Cookies["Memname"].Value.ToString()" ng-readonly="true">
+                                <label for="name">Grop Name:</label>
+                                <input type="text" placeholder="Name" class="form-control" value="@Session["GNAME"].ToString()" readonly>
+
+                            </div>
+                            <div class="form-group row" style="margin-left:10px;">
+                                <label class="form-check-label col-md-5">
+                                    <input type="radio" class="form-check-input" ng-model="ItemMasert.stussubcrop" name="optradio" value="Requirement" required>Requirement
+                                </label>
+
+                                <label class="form-check-label col-md-5">
+                                    <input type="radio" class="form-check-input" ng-model="ItemMasert.stussubcrop" name="optradio" value="SubmitCrop">SubmitCrop
+                                </label>
+                            </div>
+                            @*<span ng-show="ItemFrom.optradio.$dirty && ItemFrom.optradio.$error.required" class="text-danger">Select radio button !</span>*@
+
+                        }
+
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+
+                            <select class="custom-select" ng-model="ItemMasert.cpid" required ng-blur="SelectCrop()">
+                                <option value="" selected>-- Select Crop Name /Item Name --</option>
+                                <option ng-repeat="st in san| filter : ItemMasert.ItypeId" value="{{st.cpid}}">{{st.cpname}}</option>
+                            </select>
+
+
+                            @*<input type="text" ng-model="ItemMasert.name" name="name" placeholder="Item Name" class="form-control" required pattern="^[A-Z]{1}[a-z ]{0,20}$">
+            @*<span ng-show="ItemFrom.name.$dirty && ItemFrom.name.$error.required" class="text-danger">Item Name is Required !</span>
+            <span ng-show="ItemFrom.name.$dirty && ItemFrom.name.$error.pattern" class="text-danger">First letter should be capital...Only 20 characters are allowed...No special characters allowed</span>*@
+
+
+                        </div>
+
+                        <div class="form-group" ng-hide="ItemMasert.ItypeId==2 ||  ItemMasert.ItypeId==3">
+                            <label for="name">Varity Name:</label>
+
+                            <select class="custom-select" ng-model="ItemMasert.varkeyItem" >
+                                <option value="" selected>-- Select Crop Name /Item Name --</option>
+                                <option ng-repeat="st in varname" value="{{st.varid}}">{{st.verity}}</option>
+                            </select>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="Group Name">Image:</label>
+                            <div class="custom-file ">
+                                <input name="img" ngf-select ng-model="ItemMasert.img" type="file" class="btn-outline-success" onchange="angular.element(this).scope().uploadedFile(this)" required @*pattern="([a-zA-Z0-9\s_\\.\-:])+(.jpg)$"*@ />
+
+                                @*<input type="file"  ngf-select name="img"  ng-model="ItemMasert.img" class="custom-file-input" onchange="angular.element(this).scope().uploadedFile(this)">*@
+                                @*<label class="custom-file-label" for="customFile">Choose file</label>*@
+                            </div>
+                            @*<span ng-show="ItemFrom.img.$dirty && ItemFrom.img.$error.required" class="text-danger">Item Image is Required !</span>*@
+                            <span ng-show="tt == true" class="text-danger">Only allowed jpg,jpeg,png photo Image try agin !</span>
+
+
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 ">
+                                <label for="Address">Quantity</label>
+                                <input type="text" ng-model="ItemMasert.qty" name="qty" placeholder="Quantity per bage 30 kg" class="form-control" required pattern="^[0-9]{2,10}$">
+                                @*<span ng-show="ItemFrom.qty.$dirty && ItemFrom.qty.$error.required" class="text-danger">Item Quntity is Required !</span>*@
+                                <span ng-show="ItemFrom.qty.$dirty && ItemFrom.qty.$error.pattern" class="text-danger">Must be allowd numbers only and minimum 2 digit allowed!</span>
+
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email">Price 1</label>
+                                <input type="text" ng-model="ItemMasert.price" name="price" placeholder="Price in Rs per 30 kg" class="form-control" required pattern="^[0-9]{2,10}$">
+                                @*<span ng-show="ItemFrom.price.$dirty && ItemFrom.price.$error.required" class="text-danger">Item Price is Required !</span>*@
+                                <span ng-show="ItemFrom.price.$dirty && ItemFrom.price.$error.pattern" class="text-danger">Must be allowd numbers only and minimum 2 digit allowed!</span>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" ng-disabled="ItemFrom.$invalid" class="btn btn-success" ng-click="AddItemUser(ItemMasert)"><i class="far fa-check-circle"></i> Submit</button>
+                            <button type="submit" class="btn btn-danger" ng-click="ItemMasert=null;Cook()"><i class="far fa-times-circle"></i> Cancel</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+

@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "ProfileUser";
+}
+
+<h2>ProfileUser</h2>
+
+
+
+
+
+
+
+<div ng-app="ProUser" ng-controller="ProUserController" data-ng-init="ProfileUser()">
+    <form>
+
+
+        <div class="container col-md-7 offset-md-3">
+            <div class="shadow p-4 mb-4 bg-white">
+                <div class="card card-primary border-primary">
+                    <div class="card-header bg-primary text-white"> Profile Update <i class="fa fa-user"></i></div>
+                    <div class="card-body">                       
+                        <div class="form-group">
+
+                            <input type="radio" ng-init="Registration.rtype='NewGroup'" ng-model="Registration.rtype" name="rtype" value="NewGroup" ng-change='newValue(value)' disabled /><label>New Group</label>
+                            <input type="radio" ng-model="Registration.rtype" name="rtype" value="Member" ng-change='newValue(value)' disabled /><label>Member</label>
+                            @*<input type="radio" ng-model="Registration.rtype" name="rtype" value="ProgressiveFarmer" ng-change='newValue(value)' /><label>Progressive Farmer/Scientist</label>*@
+                            <input type="radio" ng-model="Registration.rtype" name="rtype" value="Company" ng-change='newValue(value)' disabled /><label>Company</label>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" ng-model="Registration.name" name="name" class="form-control" required>
+                            @*<span ng-show="RegFrom.name.$dirty && RegFrom.name.$error.required">Name is Required</span>*@
+                        </div>
+
+
+                        <div class="form-group" ng-hide=" ms.Comp == true || ms.Mem == true">
+                            <label for="Group Name">Group Name:</label>
+                            <input type="text" ng-model="Registration.gname" class="form-control">
+                        </div>
+                     
+                        <div class="form-group" ng-show="ms.Comp == true">
+                            <label for="Group Name">Company Name:</label>
+                            <input type="text" ng-model="Registration.gname" class="form-control" />
+                        </div>
+                        <div class="form-group" ng-show="ms.Mem == true">
+                            <label for="Group Name">Group Name:</label>
+                            <select class="custom-select" ng-model="Registration.gname" required>
+                                <option value="" selected>-- Select Group Name --</option>
+                                <option ng-repeat="st in Regg" value="{{st.rid}}">{{st.gname}}</option>
+                            </select>
+                            @*<span class="error" ng-show="RegFrom.gname.$dirty && RegFrom.gname.$error.required">Location required!</span>*@
+
+                            @*<select ng-model="Registration.gname" name="gname" ng-options="b.rid as b.gname for b in Regg" class="custom-select">
+                                    <option value="" selected>-- Select Group Name --</option>
+                                </select>*@
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Address">Address:</label>
+                            <input type="text" ng-model="Registration.addr" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail:</label>
+                            <input type="text" ng-model="Registration.email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="Mo">Mobile Number:</label>
+                            <input type="text" ng-model="Registration.monum" class="form-control">
+                        </div>
+                        @*<div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input type="password" ng-model="Registration.pass" class="form-control" id="pwd">
+                        </div>*@
+
+
+
+                        <button type="submit" @*ng-disabled="RegFrom.$invalid"*@ ng-click="ProSave()" class="btn btn-primary"> Update</button>
+                        <button type="submit" @*ng-disabled="RegFrom.$invalid" ng-click="savedata()"*@ class="btn btn-danger"> Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+

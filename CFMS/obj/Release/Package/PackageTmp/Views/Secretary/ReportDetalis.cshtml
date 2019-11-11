@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "ReportDetalis";
+}
+
+<div class="loader"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(".btn").click(function () {
+        $(".loader").fadeOut("slow");
+    });
+    $(function () {
+         var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var minDate= year + '-' + month + '-' + day;
+    
+        $('#sdate').attr('max', minDate);
+        $('#ldate').attr('max', minDate);
+    });
+</script>
+
+<div ng-app="Report" ng-controller="ReportDetalisController" data-ng-init="dateRep()">
+    <form name="rep">
+        <div class="container col-md-4 offset-md-4 ">
+            @*<div class="shadow  bg-white">*@
+            <div class="card card-primary border-primary">
+                <div class="card-header bg-primary text-white"> Report <i class="fas fa-file-pdf"></i> </div>
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <input type="hidden" ng-model="typ" ng-init="typ = '@Session["UTYPE"].ToString()'" />
+                        <select ng-model="MenuRep" name="MenuRep" class="form-control" required>
+                            <option style="display:none" value="">select a type</option>
+                            <option value="1">Buy Item</option>
+                            <option value="2">Sell Item</option>
+                            <option value="Requirement" ng-hide="typ=='Company'">Requirement</option>
+                            <option value="SubmitCrop" ng-hide="typ=='Company'">SubmitCrop</option>
+                        </select>
+                        <span ng-show="rep.MenuRep.$dirty && rep.MenuRep.$error.required" class="text-danger">Select Type Required !</span>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="date" ng-model="sdate" name="sdate" id="sdate" class="form-control" />
+                        <span ng-show="rep.sdate.$dirty && rep.sdate.$error.required" class="text-danger">Select Start date !</span>
+                    </div>
+                    <div class="form-group">
+                        <input type="date" ng-model="ldate" name="ldate" id="ldate" class="form-control" required />
+
+                        <span ng-show="rep.ldate.$dirty && rep.ldate.$error.required" class="text-danger">Select Last date !</span>
+                        <span ng-show="sdate>ldate" class="text-danger">Please Valid date select !</span>
+                    </div>
+
+                    <div class="form-group">
+                        @*<a ng-href="/Secretary/ReportSell/?sd={{sdate}}&&ld={{ldate}}&&tp={{typ}}" class="btn btn-success">
+                                <i class="fas fa-file-pdf"></i>Report
+                            </a>*@
+
+                        <button ng-href="" ng-disabled="rep.$invalid || sdate>ldate" ng-click="Report()" target="_blank" class="btn btn-success">
+                            <i class="fas fa-file-pdf"></i>Report
+                        </button>
+
+                        @*<button type="submit" ng-click="Report()" class="btn btn-success"> <i class="fas fa-file-pdf"></i> Report</button>*@
+                        <button type="submit" class="btn btn-danger"> <i class="fas fa-window-close"></i> Cancel</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*</div>*@
+    </form>
+</div>

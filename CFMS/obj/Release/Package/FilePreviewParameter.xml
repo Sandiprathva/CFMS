@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="CFMS" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\sandip\\LocalDB\\CFMS\\CFMS\\CFMS\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\sandip\\LocalDB\\CFMS\\CFMS\\CFMS\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DataCon-Web.config Connection String" description="" value="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\sandip\LocalDB\CFMS\CFMS\CFMS\App_Data\Database1.mdf;Integrated Security=True;Connect Timeout=30" tags="">
+    <parameterEntry kind="XmlFile" scope="D:\\sandip\\LocalDB\\CFMS\\CFMS\\CFMS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DataCon']/@connectionString" />
+  </parameter>
+</parameters>

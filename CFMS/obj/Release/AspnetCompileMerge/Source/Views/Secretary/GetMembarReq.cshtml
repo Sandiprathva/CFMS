@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "GetMembarReq";
+}
+
+
+<div ng-app="MemDetail" ng-controller="MemDetailController">
+    <div class="container ">
+        <div class="shadow  bg-white">
+            <div class="card card-primary border-primary">
+                <div class="card-header bg-primary text-white"> Requirement Details </div>
+                <div class="card-body">
+                    <div class="col-md-4 float-md-right" style="margin-bottom:10px;"><input type="text" placeholder="Search..." class="form-control" ng-model="test"></div>
+
+                    <table class="table table-striped">
+                        <thead class="bg-warning">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Group Name</th>
+                                <th>Price per qty</th>
+                                <th>Quantity</th>
+
+                                <th>Payment</th>
+
+
+
+
+
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="k in Membars | filter : test">
+                                <td>{{$index+1 }}</td>
+
+                                <td>{{k.name}}</td>
+                                <td>@Session["GNAME"].ToString()</td>
+                                <td>{{k.price}}</td>
+                               
+                                <td>{{k.qty}}</td>
+                                <td>{{k.stuspay}}</td>
+
+                            </tr>
+                        <tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "ShowSellingItem";
+}
+
+<h2>ShowSellingItem</h2>
+
+<div ng-app="ShowItemSecertry" ng-controller="ShowItemSecertryController">
+
+    <div class="container ">
+         <div class="form-horizontal">
+       
+            <div class="card card-primary border-primary">
+                <div class="card-header bg-primary text-white"> Add Item show of secretary </div>
+                <div class="card-body">
+                    <div class="form-group row col-md-8">
+                        <input type="text" placeholder="Search..." class="form-control" ng-model="test">
+                    </div>
+                    <div class="form-group row offset-5 col-md-4 " >
+                        <div class="form-check">
+                            <label class="form-check-label">
+
+                                <input type="radio"  ng-init="aa='OurItem'" class="form-check-input" ng-model="aa" value="OurItem" name="optradio" ng-change='getImg()' checked >Our Item
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" ng-model="aa"  name="optradio" value="BuyItem" ng-change='getImg()'>Buy Item
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div class="row" >
+                        <div ng-repeat="a in Item | filter : test">
+                            <div class="clearfix" ng-if="$index % 4 == 0"></div>
+                          
+                                <div class="shadow bg-white" style="margin-left:15px;">
+                                   
+                                    <button class="btn btn-warning form-control">
+                                        <span class="badge badge-light">{{a.name}}</span>
+                                    </button>
+                                    
+                                    <div class="form-group">
+                                        <img ng-src="~/UploadedItem/{{a.img}}" class="img-thumbnail img-fluid" style="width: 250px; height: 250px;margin-top:10px;" />
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-danger">
+                                            <i class="fas fa-rupee-sign"></i> <span class="badge badge-light">{{a.price}}</span>
+                                        </button>
+                                        <span class="btn btn-info">
+                                            <i class="fa fa-layer-group"></i> <span class="badge badge-light">{{a.qty}}</span>
+                                        </span>
+                                    </div>
+                                    <div class="form-group" ng-show="show.buy == true" align="center" valign="center">
+                                        <button type="button" class="btn btn-success" ng-click="AddCartItem(a)">
+                                            <i class="fas fa-shopping-cart"></i>Add Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                      
+                    </div>
+
+                </div>
+
+
+                </div>
+            </div>
+      
+
+    </div>
+</div>

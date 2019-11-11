@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "Show";
+}
+
+<div class="loader"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(".btn").click(function () {
+        $(".loader").fadeOut("slow");
+    });
+</script>
+
+<div ng-app="ShowItem" ng-controller="ShowItemController">
+    <div class="container-fluid ">
+        @*<div class="shadow  bg-white">*@
+        <div class="card card-primary border-primary">
+            <div class="card-header bg-primary text-white"> Show Item </div>
+            <div class="card-body">
+
+                <div class="form-group row offset-3 col-md-6 text-center ">
+                    @if (Session["UTYPE"].ToString() == "Company" || Session["UTYPE"].ToString() == "Member")
+                    {
+                        <div class="form-check row ">
+                            <label class="form-check-label " style="margin-right:20px;">
+
+                                <input type="radio" ng-init="aa='1'" class="form-check-input" ng-model="aa" value="1" name="optradio" ng-change='ShowDetails()'>Sell Seed
+                            </label>
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" ng-model="aa" value="2" name="optradio" ng-change='ShowDeta()'>Sell Fetilizer
+
+                            </label>
+                            @*</div>*@
+                        </div>
+                    }
+
+
+                    @if (Session["UTYPE"].ToString() == "NewGroup")
+                    {
+                        <div class="form-check col-md-4">
+                            <label class="form-check-label">
+
+                                <input type="radio" ng-init="aa='1'" class="form-check-input" ng-model="aa" value="1" name="optradio" ng-change='ShowDetails()'>Sell Item
+                            </label>
+                        </div>
+                        <div class="form-check col-md-4">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" ng-model="aa" name="optradio" value="Requirement" ng-change='ShowDetails()'> Requirement
+                            </label>
+                        </div>
+
+                        <div class="form-check col-md-4">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" ng-model="aa" name="optradio" value="SubmitCrop" ng-change='ShowDetails()'> SubmitCrop
+                            </label>
+                        </div>
+
+
+                        @*<div class="form-check col-md-4" ng-show="aa=='Requirement'">
+                            <div class="form-group row" style="margin-left:10px;">
+                                <div ng-repeat="user in Itypee">
+                                    <input type="radio" name="ItypeId" ng-checked="user.ItypeId==1" data-ng-model="$parent.ItemMasert.ItypeId" required data-ng-value="user.ItypeId"
+                                           ng-init="$index==0?($parent.ItemMasert.ItypeId=user.ItypeId):''" />{{user.type}}
+                                </div>
+                                @*<span ng-show="ItemFrom.ItypeId.$dirty && ItemFrom.ItypeId.$error.required" class="text-danger">Select radio button!</span>
+
+
+                            </div>
+                        </div>*@
+                    }
+                </div>
+
+
+                <table class="table table-striped table-responsive-md">
+                    <thead class="bg-warning">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th ng-hide="aa==2">Varity Name</th>
+                            <th>Price pre 1 Rs</th>
+                            <th>Quantity</th>
+                            <th>Payment</th>
+                            <th>Iamge</th>
+                            <th></th>
+                            <th ng-show="aa=='Requirement' || aa=='SubmitCrop' "></th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="k in ItemData | filter : test  ">
+                            <td>{{ $index +1}}</td>
+
+                            <td>{{k.cpname}}</td>
+                            <td ng-hide="aa==2 || k.varkeyItem==0">{{k.verity}}</td>
+                            <td ng-show="k.varkeyItem==0">Fertilizer</td>
+
+                            <td>{{k.price}}</td>
+                            <td>{{k.qty}}</td>
+                            <td>{{k.stuspay}}</td>
+
+                            <td>
+                                <img ng-src="~/UploadedItem/{{k.img}}" class="img-thumbnail img-fluid" style="width:100px; height:100px;" />
+                            </td>
+                            <td>
+
+                                <a ng-href="/Company/SellitemEidt/?id={{ k.Imid }}&&a={{aa}}" class="btn btn-primary">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                            </td>
+                            <td ng-show="aa=='Requirement' || aa=='SubmitCrop' ">
+                                <button type="button" ng-click="Payment(k)" class="btn btn-success"> <i class="fas fa-rupee-sign"></i></button>
+
+                            </td>
+                            <td>
+                                <button type="button" ng-click="DeletItem(k)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+
+                            </td>
+                        </tr>
+                    <tbody>
+                </table>
+                @*<input type="text" ng-model="aas" />
+                <table class="table table-striped table-responsive-md" ng-show="aa=='Requirement'">
+                    <thead class="bg-warning">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+
+                            <th>Price pre 1 Rs</th>
+                            <th>Quantity</th>
+                            <th>Payment</th>
+                            <th>Iamge</th>
+                            <th></th>
+                            <th ng-show="aa=='Requirement' || aa=='SubmitCrop' "></th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="k in ItemData | filter : aas  ">
+                            <td>{{ $index +1}}</td>
+                            <td>{{k.ItypeId}}</td>
+                            <td>{{k.cpname}}</td>
+
+                            <td>{{k.price}}</td>
+                            <td>{{k.qty}}</td>
+                            <td>{{k.stuspay}}</td>
+
+                            <td>
+                                <img ng-src="~/UploadedItem/{{k.img}}" class="img-thumbnail img-fluid" style="width:100px; height:100px;" />
+                            </td>
+                            <td>
+
+                                <a ng-href="/Company/SellitemEidt/?id={{ k.Imid }}&&a={{aa}}" class="btn btn-primary">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                            </td>
+                            <td ng-show="aa=='Requirement' || aa=='SubmitCrop' ">
+                                <button type="button" ng-click="Payment(k)" class="btn btn-success"> <i class="fas fa-rupee-sign"></i></button>
+
+                            </td>
+                            <td>
+                                <button type="button" ng-click="DeletItem(k)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+
+                            </td>
+                        </tr>
+                    <tbody>
+                </table>*@
+
+
+            </div>
+        </div>
+    </div>
+    @*</div>*@
+</div>

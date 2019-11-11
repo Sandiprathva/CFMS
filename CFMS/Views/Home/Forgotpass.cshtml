@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Forgotpass";
+}
+
+<div class="loader"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(".btn").click(function () {
+        $(".loader").fadeOut("slow");
+    });
+</script>
+
+<div ng-app="ProUser" ng-controller="ProUserController">
+    <form name="Regom" novalidate>
+        <div class="container col-md-7 offset-md-3">
+            <div class="shadow p-4 mb-4 bg-white">
+                <div class="card card-primary border-primary">
+                    <div class="card-header bg-primary text-white"> Forgot password <i class="fas fa-key"></i></div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">E-mail:</label>
+                            <input type="text" ng-model="email" ng-pattern="Ptemail" name="name" placeholder="E-mail" class="form-control" required>
+                            <span ng-show="RegFrom.email.$dirty && RegFrom.email.$error.pattern" class="text-danger">E-mail Id is invalid try agin .</span>
+
+
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" ng-disabled="Regom.$invalid " ng-click="SendEmail()" class="btn btn-success"><i class="fas fa-paper-plane"></i> Send</button>
+                            <button type="submit" class="btn btn-danger" ng-click="email=null"><i class="far fa-times-circle"></i> Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
