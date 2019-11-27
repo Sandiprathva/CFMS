@@ -3,13 +3,7 @@
     ViewBag.Title = "Show";
 }
 
-<div class="loader"></div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript">
-    $(".btn").click(function () {
-        $(".loader").fadeOut("slow");
-    });
-</script>
+
 
 <div ng-app="ShowItem" ng-controller="ShowItemController">
     <div class="container-fluid ">
@@ -77,8 +71,8 @@
                             <th>Id</th>
                             <th>Name</th>
                             <th ng-hide="aa==2">Varity Name</th>
-                            <th>Price pre 1 Rs</th>
-                            <th>Quantity</th>
+                            <th>Price </th>
+                            <th>Quantity per bag</th>
                             <th>Payment</th>
                             <th>Iamge</th>
                             <th></th>
@@ -96,7 +90,7 @@
                             <td ng-hide="aa==2 || k.varkeyItem==0">{{k.verity}}</td>
                             <td ng-show="k.varkeyItem==0">Fertilizer</td>
 
-                            <td>{{k.price}}</td>
+                            <td>{{k.price}} Rs</td> 
                             <td>{{k.qty}}</td>
                             <td>{{k.stuspay}}</td>
 
@@ -105,7 +99,7 @@
                             </td>
                             <td>
 
-                                <a ng-href="/Company/SellitemEidt/?id={{ k.Imid }}&&a={{aa}}" class="btn btn-primary">
+                                <a ng-href="/Company/SellitemEidt/?id={{ k.Imid }}&&a={{aa}}&&N={{k.verity}}" class="btn btn-primary">
                                     <i class="far fa-edit"></i>
                                 </a>
                             </td>

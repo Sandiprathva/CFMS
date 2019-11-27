@@ -42,7 +42,7 @@
 
                                 <select class="custom-select" ng-model="ItemMasert.cpid" required ng-change="SelectCropNew()">
                                     <option value="" selected>-- Select Crop Name /Item Name --</option>
-                                    <option ng-repeat="stt in cpnn | unique: 'cpname' " value="{{stt.cpid}}">{{stt.cpname}}</option>
+                                    <option ng-repeat="stt in cpnn | unique: 'cpname' " value="{{stt.cpid}}" ng-hide="$index==0">{{stt.cpname}}</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -69,9 +69,17 @@
                             <div class="form-group">
                                 <label for="name">Name:</label>
 
-                                <select class="custom-select" ng-model="ItemMasert.cpid" required ng-blur="SelectCrop()">
+                                <select class="custom-select" ng-model="ItemMasert.cpid" required ng-blur="SelectCrop()" ng-show="ItemMasert.ItypeId==1">
                                     <option value="" selected>-- Select Crop Name /Item Name --</option>
+                                    @*<option ng-repeat="st in sann | filter : ItemMasert.ItypeId" value="{{st.cpid}}" ng-if="st.ItypeId==2">{{st.cpname}}</option>*@
                                     <option ng-repeat="st in san | filter : ItemMasert.ItypeId" value="{{st.cpid}}">{{st.cpname}}</option>
+
+                                </select>
+                                <select class="custom-select" ng-model="ItemMasert.cpid" required ng-blur="SelectCrop()" ng-show="ItemMasert.ItypeId==2">
+                                    <option value="" selected>-- Select Crop Name /Item Name --</option>
+                                    @*<option ng-repeat="st in sann | filter : ItemMasert.ItypeId" value="{{st.cpid}}" ng-if="st.ItypeId==2">{{st.cpname}}</option>*@
+                                    <option ng-repeat="st in sann | filter : ItemMasert.ItypeId" value="{{st.cpid}}">{{st.cpname}}</option>
+
                                 </select>
                             </div>
 
@@ -110,7 +118,7 @@
                         <div class="form-group row">
                             <div class="col-md-6 " ng-show="toclu == true">
                                 <label for="Address">Quantity</label>
-                                <input type="text" ng-model="ItemMasert.qty" name="qty" placeholder="Quantity per bage" class="form-control" required pattern="^[0-9]{2,10}$" readonly>
+                                <input type="text" ng-model="ItemMasert.qty" name="qty" placeholder="Quantity per bag" class="form-control" required pattern="^[0-9]{2,10}$" readonly>
                                 @*<span ng-show="ItemFrom.qty.$dirty && ItemFrom.qty.$error.required" class="text-danger">Item Quntity is Required !</span>*@
                                 <span ng-show="ItemFrom.qty.$dirty && ItemFrom.qty.$error.pattern" class="text-danger">Must be allowd numbers only and minimum 2 digit allowed!</span>
 
@@ -118,15 +126,15 @@
                             </div>
                             <div class="col-md-6 " ng-show="toclu == false">
                                 <label for="Address">Quantity</label>
-                                <input type="text" ng-model="ItemMasert.qty" name="qty" placeholder="Quantity per bage" class="form-control" required pattern="^[0-9]{2,10}$">
+                                <input type="text" ng-model="ItemMasert.qty" name="qty" placeholder="Quantity per bag" class="form-control" required pattern="^[0-9]{2,10}$">
                                 @*<span ng-show="ItemFrom.qty.$dirty && ItemFrom.qty.$error.required" class="text-danger">Item Quntity is Required !</span>*@
                                 <span ng-show="ItemFrom.qty.$dirty && ItemFrom.qty.$error.pattern" class="text-danger">Must be allowd numbers only and minimum 2 digit allowed!</span>
 
 
                             </div>
                             <div class="col-md-6">
-                                <label for="email">Price 1</label>
-                                <input type="text" ng-model="ItemMasert.price" name="price" placeholder="Price in Rs per bage" class="form-control" required pattern="^[0-9]{2,10}$">
+                                <label for="email">Price per bag</label>
+                                <input type="text" ng-model="ItemMasert.price" name="price" placeholder="Price in Rs" class="form-control" required pattern="^[0-9]{2,10}$">
                                 @*<span ng-show="ItemFrom.price.$dirty && ItemFrom.price.$error.required" class="text-danger">Item Price is Required !</span>*@
                                 <span ng-show="ItemFrom.price.$dirty && ItemFrom.price.$error.pattern" class="text-danger">Must be allowd numbers only and minimum 2 digit allowed!</span>
 

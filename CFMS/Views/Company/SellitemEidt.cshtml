@@ -19,7 +19,13 @@
                         <label for="name">Name:</label>
                         <input type="text" name="cname" placeholder="Name" class="form-control" value="@Session["cpnmm"].ToString()" readonly>
                     </div>
-
+                    @if (Session["edi"].ToString() != "0")
+                    {
+                    <div class="form-group">
+                        <label for="name">Varity Name:</label>
+                        <input type="text" name="vaname" placeholder="Name" class="form-control" value="@Session["edi"].ToString()" readonly>
+                    </div>
+                    }
 
                     <label for="Group Name">Image:</label>
                     <div class="custom-file">

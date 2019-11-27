@@ -6,16 +6,6 @@
 
 
 
-@*@{
-        ViewBag.Title = "AddregItem";
-    }
-    <div class="loader"></div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(".btn").click(function () {
-            $(".loader").fadeOut("slow");
-        });
-    </script>*@
 <div ng-app="AddItem" ng-controller="AddItemUSerController" data-ng-init="init()">
     <form enctype="multipart/form-data" name="ItemFrom" novalidate>
         <div class="container col-md-5 offset-md-3">
@@ -39,7 +29,7 @@
                             </div>
                             @*<span ng-show="ItemFrom.ItypeId.$dirty && ItemFrom.ItypeId.$error.required" class="text-danger">Select radio button!</span>*@
 
-
+                            <input type="hidden" ng-model="tty" value="1" />
                         </div>
                         <div class="form-group">
                             <label for="name">Crop Name:</label>
@@ -85,14 +75,14 @@
                 </thead>
 
                 <tbody>
-                    <tr ng-repeat="var in GetVar | filter: ItemMasert.ItypeId">
+                    <tr ng-repeat="var in GetVar">
                         <input type="hidden" value="{{var.varid}}" />
                         <td>{{ $index + 1 }}</td>
                         <td>{{var.cpname}}</td>
                         <td>{{var.verity}}</td>
 
                         <td>
-                            <button type="button" ng-click="getCropvarityEdit(var)" class="btn btn-PR">
+                            <button type="button" ng-click="getCropvarityEdit(var)" class="btn btn-primary">
                                 <i class="far fa-edit"></i>
 
                             </button>

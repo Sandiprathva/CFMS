@@ -545,7 +545,7 @@ namespace CFMS.Controllers
         
 
         //sell item and requrment and submit crop details Edite for secretary and company
-        public ActionResult SellitemEidt(int id ,string a)
+        public ActionResult SellitemEidt(int id ,string a,string N)
         { 
             HttpCookie Sellid = new HttpCookie("Sellid", id.ToString());
             Response.Cookies.Add(Sellid);
@@ -554,11 +554,21 @@ namespace CFMS.Controllers
             int M = Convert.ToInt32(l);
             //  var res = (from a in con.crop join d in con.ItemMaserts on a.cpid equals d.cpid where (a.deletst == 0 && d.Imid==aa && d.stusdele == 0) select new { a.cpname, a.ItypeId, a.cpid, d.img, d.qty, d.price, d.uid, d.rid }).Distinct().ToList();
 
-
+            
             var res = con.ItemMaserts.Find(M);
             var k = con.crop.Find(res.cpid);
             Session["cpnmm"] = k.cpname;
 
+           
+            if (N.ToString()=="")
+            {
+                Session["edi"] = 0;
+            }
+            else
+            {
+                Session["edi"] = N.ToString();
+            }
+          
             return View();
         }
 
@@ -572,9 +582,18 @@ namespace CFMS.Controllers
 
            var res = con.ItemMaserts.Find(a);
             var k = con.crop.Find(res.cpid);
-            //Session["cpnmm"] = k.cpname;
-            return Json(res, JsonRequestBehavior.AllowGet);
+            //if (Convert.ToInt32(Session["edi"]) != 0)
+            //{
+            //    int r = Convert.ToInt32(Session["edi"]);
+            //    var s = con.Varity.Where(x => x.varid == r ) .ToList();
+            //    return Json(new {res = res, Myvar = s}, JsonRequestBehavior.AllowGet);
+            //}
+            //else
+            //{
+            //    return Json(res, JsonRequestBehavior.AllowGet);
+            //}
 
+            return Json(res, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

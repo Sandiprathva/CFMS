@@ -621,7 +621,7 @@ namespace CFMS.Controllers
         {
             MemoryStream ms = new MemoryStream();
 
-            Document doc = new Document(iTextSharp.text.PageSize.A4, 40, 40, 40, 40);
+            Document doc = new Document(iTextSharp.text.PageSize.A4, 30, 40, 30, 40);
             PdfWriter pw = PdfWriter.GetInstance(doc, ms);
 
             PdfPTable table = new PdfPTable(6);
@@ -635,43 +635,48 @@ namespace CFMS.Controllers
             DateTime uuu = Convert.ToDateTime(Convert.ToDateTime(sd.ToString()).ToShortDateString());
             DateTime uu = Convert.ToDateTime(Convert.ToDateTime(ld.ToString()).ToShortDateString());
 
-            List<Sell_Master> kk = new List<Sell_Master>();
+            List<Sell_Master> kkk = new List<Sell_Master>();
             if (Session["UTYPE"].ToString() == "Admin")
             {
-                kk = con.sell.Where(x => (x.date >= uuu && x.date <= uu)).ToList();
+                kkk = con.sell.Where(x => (x.date >= uuu && x.date <= uu)).ToList();
 
             }
             else
             {
-                kk = con.sell.Where(x => (x.rid == a) && (x.date >= uuu && x.date <= uu)).Distinct().ToList();
+                kkk = con.sell.Where(x => (x.rid == a) && (x.date >= uuu && x.date <= uu)).Distinct().ToList();
             }
 
            // var kk = con.sell.Where(x => x.rid == a && (x.date >= uuu && x.date <= uu)).ToList();
 
                 Paragraph vv = new Paragraph("Co-Operative Farming  Management System");
 
-                vv.Alignment = Font.BOLD;
-                vv.SpacingAfter = 5f;
+               vv.Alignment = Font.BOLD;
+                vv.Alignment = Element.ALIGN_CENTER;
+                
 
                 string path = ControllerContext.HttpContext.Server.MapPath("~/img/Capture.JPG");
                 iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(path);
                 image.ScaleToFit(80f, 40f);
-                image.Alignment = Element.ALIGN_CENTER;
+                image.Alignment = Element.ALIGN_TOP;
+                 image.SetAbsolutePosition(80f, 770f);
 
-
-                Paragraph vv1 = new Paragraph("Report Date :" + DateTime.UtcNow.Date.ToString("dd/MM/yyyy"));
+                 Paragraph vv1 = new Paragraph("Date :" + DateTime.UtcNow.Date.ToString("dd/MM/yyyy"));
 
                 vv1.SpacingAfter = 6;
                 vv1.Alignment = Font.BOLD;
 
-
+            
                 vv1.Alignment = Element.ALIGN_RIGHT;
                 doc.Open();
                 string PP = "";
 
+            //group pdf admin
+            var cnt = kkk.Select(x => x.rid).Distinct().ToList();
+
+            var kk = con.sell.Where(k => cnt.Contains(k.rid)).OrderBy(x=>x.rid).ToList();
                 if (Request.Cookies["tpye"].Value.ToString() == "1")
                 {
-                    PP = "Buy Item";
+                    PP = "Purchase Item";
 
                 }
                 else
@@ -684,9 +689,137 @@ namespace CFMS.Controllers
                 cell.Colspan = 6;
                 cell.HorizontalAlignment = Font.BOLD;
                 cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                table.AddCell(cell);
+                
 
 
+               
+
+                int s = 1;
+            if (Session["UTYPE"].ToString() == "Admin")
+            {
+                foreach (var p in cnt)
+                {
+                    var k = con.Reg.Where(x => x.rid == p).FirstOrDefault();
+
+                    if (k.rtype == "NewGroup")
+                    {
+                        PdfPCell cell1 = new PdfPCell(new Phrase("Secretary Name :" + k.name));
+
+                        cell1.Colspan = 6;
+                        cell1.Rowspan = 2;
+                        cell1.HorizontalAlignment = Font.BOLD;
+                        cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+
+                        PdfPCell cell11 = new PdfPCell(new Phrase("Group Name :" + k.gname));
+
+                        cell11.Colspan = 6;
+                        cell11.Rowspan = 2;
+                        cell11.HorizontalAlignment = Font.BOLD;
+                        cell11.HorizontalAlignment = Element.ALIGN_LEFT;
+                        table.AddCell(cell);
+                        table.AddCell(cell1);
+                        table.AddCell(cell11);
+                    }
+                    else
+                    {
+                        PdfPCell cell1 = new PdfPCell(new Phrase(" Name :" + k.name));
+
+                        cell1.Colspan = 6;
+                        cell1.Rowspan = 2;
+                        cell1.HorizontalAlignment = Font.BOLD;
+                        cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+
+                        PdfPCell cell11 = new PdfPCell(new Phrase("Company Name :" + k.gname));
+
+                        cell11.Colspan = 6;
+                        cell11.Rowspan = 2;
+                        cell11.HorizontalAlignment = Font.BOLD;
+                        cell11.HorizontalAlignment = Element.ALIGN_LEFT;
+                        table.AddCell(cell);
+                        table.AddCell(cell1);
+                        table.AddCell(cell11);
+                    }
+
+
+                    table.AddCell("No");
+                    table.AddCell("Product Name");
+                    table.AddCell("Varity Name");
+                    table.AddCell("Quantity");
+                    table.AddCell("Price");
+                    table.AddCell("Amount");
+                    foreach (var it in kk)
+                    {
+                        if (p == it.rid)
+                        {
+                            var item = con.ItemMaserts.Find(it.Imid);
+                            table.AddCell(s.ToString());
+                            //   table.AddCell(item.cpid.ToString());
+                            var aaa = con.crop.Find(item.cpid);
+                            table.AddCell(aaa.cpname);
+                            if (it.varidsell == 0)
+                            {
+                                table.AddCell("Fertilizer");
+                            }
+                            else
+                            {
+                                var ss = con.Varity.Find(it.varidsell);
+                                table.AddCell(ss.verity.ToString());
+                            }
+
+                            table.AddCell(it.Quty.ToString());
+                            table.AddCell(it.price.ToString());
+                            table.AddCell((it.Quty * it.price).ToString());
+                            s++;
+                        }
+
+                    }
+                    //for table in some other group print diff
+
+
+                }
+            }
+            else
+            {
+                var k = con.Reg.Where(x => x.rid == a).FirstOrDefault();
+
+                if (k.rtype == "NewGroup")
+                {
+                    PdfPCell cell1 = new PdfPCell(new Phrase("Secretary Name :" + k.name));
+
+                    cell1.Colspan = 6;
+                    cell1.Rowspan = 2;
+                    cell1.HorizontalAlignment = Font.BOLD;
+                    cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+
+                    PdfPCell cell11 = new PdfPCell(new Phrase("Group Name :" + k.gname));
+
+                    cell11.Colspan = 6;
+                    cell11.Rowspan = 2;
+                    cell11.HorizontalAlignment = Font.BOLD;
+                    cell11.HorizontalAlignment = Element.ALIGN_LEFT;
+                    table.AddCell(cell);
+                    table.AddCell(cell1);
+                    table.AddCell(cell11);
+                }
+                else
+                {
+                    PdfPCell cell1 = new PdfPCell(new Phrase(" Name :" + k.name));
+
+                    cell1.Colspan = 6;
+                    cell1.Rowspan = 2;
+                    cell1.HorizontalAlignment = Font.BOLD;
+                    cell1.HorizontalAlignment = Element.ALIGN_LEFT;
+
+                    PdfPCell cell11 = new PdfPCell(new Phrase("Company Name :" + k.gname));
+
+                    cell11.Colspan = 6;
+                    cell11.Rowspan = 2;
+                    cell11.HorizontalAlignment = Font.BOLD;
+                    cell11.HorizontalAlignment = Element.ALIGN_LEFT;
+                    table.AddCell(cell);
+                    table.AddCell(cell1);
+                    table.AddCell(cell11);
+                }
                 table.AddCell("No");
                 table.AddCell("Product Name");
                 table.AddCell("Varity Name");
@@ -694,33 +827,33 @@ namespace CFMS.Controllers
                 table.AddCell("Price");
                 table.AddCell("Amount");
 
-                int s = 1;
+                int sn = 1;
 
                 foreach (var it in kk)
                 {
                     var item = con.ItemMaserts.Find(it.Imid);
-                    table.AddCell(s.ToString());
-                //   table.AddCell(item.cpid.ToString());
-                var aaa = con.crop.Find(item.cpid);
-                table.AddCell(aaa.cpname);
-                if (it.varidsell == 0)
-                {
-                    table.AddCell("Fertilizer");
-                }
-                else
-                {
-                    var ss = con.Varity.Find(it.varidsell);
-                    table.AddCell(ss.verity.ToString());
-                }
+                    table.AddCell(sn.ToString());
+                    //   table.AddCell(item.cpid.ToString());
+                    var aaa = con.crop.Find(item.cpid);
+                    table.AddCell(aaa.cpname);
+                    if (it.varidsell == 0)
+                    {
+                        table.AddCell("Fertilizer");
+                    }
+                    else
+                    {
+                        var ss = con.Varity.Find(it.varidsell);
+                        table.AddCell(ss.verity.ToString());
+                    }
 
-                table.AddCell(it.Quty.ToString());
+                    table.AddCell(it.Quty.ToString());
                     table.AddCell(it.price.ToString());
                     table.AddCell((it.Quty * it.price).ToString());
-                    s++;
+                    sn++;
                 }
-
-
-                doc.Add(image);
+            }
+            doc.Add(image);
+           // doc.Add(new Phrase(vv));
                 doc.Add(vv);
 
                 doc.Add(vv1);

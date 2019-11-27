@@ -2,15 +2,14 @@
 @{
     ViewBag.Title = "Login";
 }
-<div class="loader"></div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript">
-    $(".btn").click(function () {
-        $(".loader").fadeOut("slow");
-    });
-</script>
+
 <div ng-app="UserLogin" ng-controller="UserLOG">
+    
     <form name="login" novalidate>
+        <div ng-show="roundd==true" class="loa" >
+
+           
+        </div>
         <div class="container col-md-5 offset-md-3">
             <div class="shadow p-4 mb-4 bg-white">
                 <div class="card card-primary border-success">
@@ -26,9 +25,9 @@
                         <div class="form-group">
 
                             @*<div class="alert alert-danger alert-dismissible" ng-show="ms.fiel== true">
-                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <strong>{{ms}} </strong>
-                                </div>*@
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>{{ms}} </strong>
+                            </div>*@
                             <div ng-show="ms.fiel==true" class="text-center text-danger"><p>{{mss}}</p></div>
                         </div>
                         <div class="form-group">
@@ -50,7 +49,7 @@
                             <input type="text" class="form-control col-md-3" placeholder="Enter Captcha" name="cp" ng-model="cmp" style="margin-right:10px;" />
 
                             <button class="btn btn-primary" ng-click="cpclick()">
-                                <i  class="fas fa-sync fa-spin fa-1x"></i>
+                                <i class="fas fa-sync fa-spin fa-1x"></i>
                             </button>
                             <span class="text-danger" ng-show="login.cp.$dirty && cmp!=DaImg">
                                 Captcha Dose Not Match !

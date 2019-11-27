@@ -132,8 +132,8 @@ namespace CFMS.Controllers
                 else
                 {
                     string l ="worng";
-                    //  return Json(l, JsonRequestBehavior.AllowGet);
-                    return Json(RedirectToAction("Index"), JsonRequestBehavior.AllowGet);
+                      return Json(l, JsonRequestBehavior.AllowGet);
+                   // return Json(RedirectToAction("Index"), JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception)
@@ -831,7 +831,7 @@ namespace CFMS.Controllers
                 DataCon con = new DataCon();
               //  var K = (from a in con.crop join d in con.ItemMaserts on a.cpid equals d.cpid where (a.deletst == 0  && d.stusclu == 1 && d.stusdele == 0) select new { a.cpname, a.ItypeId, a.cpid, d.img, d.qty, d.price, d.uid, d.rid }).Distinct().ToList();
 
-                   var K = con.crop.Where(x => x.deletst==0 ).Select(x => new { x.cpid, x.cpname, x.ItypeId }).Distinct().OrderBy(x => x.cpname).ToList();
+                   var K = con.crop.Where(x => x.deletst==0 && x.ItypeId==1 ).Select(x => new { x.cpid, x.cpname, x.ItypeId }).Distinct().OrderBy(x => x.cpname).ToList();
 
                 return Json(K, JsonRequestBehavior.AllowGet);
 
@@ -843,7 +843,27 @@ namespace CFMS.Controllers
 
             }
         }
+        
+            public JsonResult GetCropNameGr()
+        {
 
+            try
+            {
+                DataCon con = new DataCon();
+                //  var K = (from a in con.crop join d in con.ItemMaserts on a.cpid equals d.cpid where (a.deletst == 0  && d.stusclu == 1 && d.stusdele == 0) select new { a.cpname, a.ItypeId, a.cpid, d.img, d.qty, d.price, d.uid, d.rid }).Distinct().ToList();
+
+                var K = con.crop.Where(x => x.deletst == 0).Select(x => new { x.cpid, x.cpname, x.ItypeId }).Distinct().OrderBy(x => x.cpname).ToList();
+
+                return Json(K, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception)
+            {
+                var l = "fail";
+                return Json(l, JsonRequestBehavior.AllowGet);
+
+            }
+        }
         public JsonResult GetCropNameClu()
         {
 
@@ -853,7 +873,7 @@ namespace CFMS.Controllers
                 int s = Convert.ToInt32(Session["UID"].ToString());
                 //var K = con.crop.Where(x => x.deletst == 0).Select(x => new { x.cpid, x.cpname, x.ItypeId }).Distinct().OrderBy(x => x.cpname).ToList();
             //    var K = (from a in con.crop join d in con.ItemMaserts on a.cpid equals d.cpid where (a.deletst == 0 && d.uid == s && d.stusclu == 1 && d.stusdele == 0 ) select   new  {  a.cpname, a.ItypeId, a.cpid, d.img, d.qty, d.price, d.uid, d.rid }).Distinct().ToList();
-                  var K = (from a in con.crop join d in con.ItemMaserts on a.cpid equals d.cpid where (a.deletst == 0 && d.uid == s && d.stusclu == 1 && d.stusdele == 0 && d.stussubcrop== "SubmitCrop") select   new  {  a.cpname, a.ItypeId, a.cpid, d.img, d.qty, d.price, d.uid, d.rid }).Distinct().ToList();
+                  var K = (from a in con.crop join d in con.ItemMaserts on a.cpid equals d.cpid where (a.deletst == 0 && d.uid == s && d.stusclu == 1 && d.stusdele == 0 && d.stussubcrop== "SubmitCrop") select   new  {  a.cpname, a.ItypeId, a.cpid, d.img, d.qty, d.price, d.uid, d.rid ,d.Imid}).Distinct().ToList();
 
                 return Json(K, JsonRequestBehavior.AllowGet);
 

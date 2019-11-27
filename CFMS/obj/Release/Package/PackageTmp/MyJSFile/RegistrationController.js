@@ -81,15 +81,17 @@ app.controller('RegistrationController', function ($scope, $http, $window) {
             $scope.err = response.data;
 
             if ($scope.err == "Success") {
-                alert("Your Registration Successfully ... !");
-                $scope.Registration.name=null;
-                $scope.Registration.gname=null;
-                $scope.Registration.addr = null;
-                $scope.Registration.email = null;
-                $scope.Registration.monum = null;
-                $scope.Registration.pass = null;
-                $scope.pss = null;
                
+                //$scope.Registration.name=null;
+                //$scope.Registration.gname=null;
+                //$scope.Registration.addr = null;
+                //$scope.Registration.email = null;
+                //$scope.Registration.monum = null;
+                //$scope.Registration.pass = null;
+                //$scope.pss = null;
+               // $scope.Registration = null;
+                alert("Your Registration Successfully ... !");
+                $window.location.href = '/Home/Registraionall/';
             }
             else {
                // $scope.msk.fail = true;
@@ -173,10 +175,13 @@ ap.controller('ReqAdminController', function ($scope, $http, $window) {
     }
     //accept requset for new group and company
     $scope.AppNewGroupComp = function (Re) {
+
         $scope.spin = {};
         //$scope.btntext = "PalseWait";
         $scope.spin.kk = true;
+   
         if ($window.confirm("Do you want to continue?")) {
+            $scope.roundd = true;
              $http({
             url: "/Home/AcceptNewGroup/",
             method: "POST",
@@ -184,6 +189,7 @@ ap.controller('ReqAdminController', function ($scope, $http, $window) {
         }).then(function (response) {
             alert(response.data);
             $scope.spin.kk = false;
+            $scope.roundd = false;
             //$scope.btntext = "Accept";
             GetNewGroup();
             GetCompany();
@@ -197,13 +203,14 @@ ap.controller('ReqAdminController', function ($scope, $http, $window) {
        
        
         if ($window.confirm("Do you want to continue?")) {
+            $scope.roundd = true;
             $http({
                 url: "/Home/RejectNewCmp/",
                 method: "POST",
                 params: { rid: Re.rid }
             }).then(function (response) {
                 alert(response.data);   
-               
+                $scope.roundd = false;
                 GetNewGroup();
                 GetCompany();
             });
@@ -363,7 +370,7 @@ LOGIN.controller('UserLOG', function ($scope, $http, $window, $base64) {
     $scope.Loginuser = function () {
 
        
-        $scope.ShowLoader = true;
+        $scope.roundd = true;
         $http({
             url: "/Home/ValidLogin/",
             method: "POST",
@@ -373,13 +380,13 @@ LOGIN.controller('UserLOG', function ($scope, $http, $window, $base64) {
             $scope.field = response.data;
             if ($scope.field == "worng") {
                 $scope.ms.fiel = true;
-                $scope.ShowLoader = false;
+                $scope.roundd = false;
                 //alert($scope.ms.fiel);
                 $scope.mss = "Invaid credentials try again ..!";
                
             } else {
                 //setTimeout(function () { $scope.ShowLoader = true; }, 10000);
-                $scope.ShowLoader = false;
+                $scope.roundd = false;
                 if ($scope.field.rtype == "NewGroup") {
                    
                     $window.location.href = '/Home/Index/';
@@ -408,6 +415,7 @@ Item.controller('AddItemUSerController', ['$scope', 'upload', '$http', function 
     CropName();
     CropNameClu();
     Cropvarityget();
+    CropNameGroup();
     $scope.toclu = false;
     $scope.init = function () {
         $http.get("/Home/GetItemTypeReg/").then(function (response) {
@@ -425,6 +433,16 @@ Item.controller('AddItemUSerController', ['$scope', 'upload', '$http', function 
         $scope.cpn = {};
         $http.get("/Home/GetCropName/").then(function (response) {
             $scope.san = response.data;
+            //  alert(response.data);
+
+
+        });
+    }
+
+    function CropNameGroup() {
+        $scope.cpn = {};
+        $http.get("/Home/GetCropNameGr/").then(function (response) {
+            $scope.sann = response.data;
             //  alert(response.data);
 
 
@@ -503,7 +521,7 @@ Item.controller('AddItemUSerController', ['$scope', 'upload', '$http', function 
         $scope.Varity.verity = R.verity;
         $scope.Varity.varid = R.varid;
 
-        alert(R.cpid)
+      //  alert(R.cpid)
             $scope.Action = "Update";
         $scope.btnn = "Update";
         
@@ -721,12 +739,14 @@ Member.controller('ReqScerpatryController', function ($scope, $http, $window, $l
       //  alert(Re.rid)
 
         if ($window.confirm("Are you sure?")) {
+            $scope.roundd = true;
             $http({
                 url: "/Secretary/AcceptMembar/",
                 method: "POST",
                 params: { id: Re.rid }
             }).then(function (response) {
                 alert(response.data);
+                $scope.roundd = false;
                 GetMemaber();
             });
 
@@ -877,11 +897,10 @@ showItem.controller('ShowItemController', ['$scope', 'upload', '$http', function
     //edite item display
     $scope.Item= function () {
         $http.get("/Company/SellItemEditeUser/").then(function (response) {
-
-  
+             
             $scope.ItemMasert = response.data;
             $scope.AddCrop = response.data;
-
+            //alert(response.data.verity);
         }, function () {
             alert('Data not found');
         });

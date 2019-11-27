@@ -42,10 +42,10 @@
                         <input type="hidden" ng-model="typ" ng-init="typ = '@Session["UTYPE"].ToString()'" />
                         <select ng-model="MenuRep" name="MenuRep" class="form-control" required>
                             <option style="display:none" value="">select a type</option>
-                            <option value="1">Buy Item</option>
-                            <option value="2">Sell Item</option>
+                            <option value="1">Purchase Item</option>
+                            <option value="2">Sall Item</option>
                             <option value="Requirement" ng-hide="typ=='Company'">Requirement</option>
-                            <option value="SubmitCrop" ng-hide="typ=='Company'">SubmitCrop</option>
+                            <option value="SubmitCrop" ng-hide="typ=='Company'">Submit Crop</option>
                         </select>
                         <span ng-show="rep.MenuRep.$dirty && rep.MenuRep.$error.required" class="text-danger">Select Type Required !</span>
 

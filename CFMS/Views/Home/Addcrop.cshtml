@@ -28,15 +28,15 @@
                         </div>
                         <div class="form-group row" style="margin-left:10px;">
                             <div ng-repeat="user in Itypes" style="margin-right:10px;">
-                                <input type="radio" name="ItypeId" @*ng-checked="user.ItypeId==1"*@ data-ng-model="$parent.ItemMasert.ItypeId" required data-ng-value="user.ItypeId"
-                                       ng-init="$index==0?($parent.ItemMasert.ItypeId=user.ItypeId):''" required /> {{user.type}}
+                                <input type="radio" name="ItypeId" ng-checked="user.ItypeId==1" data-ng-model="$parent.ItemMasert.ItypeId" required data-ng-value="user.ItypeId"
+                                       ng-init="$index==0?($parent.ItemMasert.ItypeId=user.ItypeId):''" /> {{user.type}}
                             </div>
 
 
                         </div>
                         <div class="form-group">
                             <label for="Address">Name:</label>
-                            <input type="text" ng-model="AddCrop.cpname" name="cpname" class="form-control" required pattern="^[A-Z]{1}[a-z ]{0,20}$" placeholder="Crop Name / Item Name" ng-change="CropCheck()">
+                            <input type="text" ng-model="AddCrop.cpname" name="cpname" class="form-control" required pattern="^[A-Z]{1}[a-z ]{0,20}$" placeholder="Item Name" ng-change="CropCheck()">
                             <span ng-show="cp.cpname.$dirty && cp.cpname.$error.pattern" class="text-danger">First letter should be capital...Only 20 characters are allowed...No special characters allowed</span>
                             <span ng-show="typeIm=='suc'" class="text-danger">Crop Name / Item Name is Alredy exit try other Name !</span>
 
@@ -59,7 +59,7 @@
                         <table class="table table-striped table-responsive-md" style="width:100%">
                             <thead class="bg-warning">
                                 <tr>
-                                    <th>Id</th>
+                                    <th>No</th>
                                     <th>Name</th>
                                     <th></th>
                                     <th></th>
@@ -70,7 +70,7 @@
                             </thead>
 
                             <tbody>
-                                <tr ng-repeat="Item in GetCrop | filter: ItemMasert.ItypeId">
+                                <tr ng-repeat="Item in GetCrop" ng-show="ItemMasert.ItypeId==2 && Item.ItypeId==2 ">
                                     <input type="hidden" value="{{Item.cpid}}" />
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{Item.cpname}}</td>
@@ -95,7 +95,32 @@
 
                                     </td>
                                 </tr>
-                            <tbody>
+                                <tr ng-repeat="Item in GetCrop" ng-show="ItemMasert.ItypeId==1 && Item.ItypeId==1 ">
+                                    <input type="hidden" value="{{Item.cpid}}" />
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{Item.cpname}}</td>
+
+                                    <td>
+
+                                        <button type="submit" ng-click="getCrop(Item)" class="btn btn-primary">
+                                            <i class="far fa-edit"></i>
+
+                                        </button>
+                                    </td>
+                                    <td>
+
+
+                                        <button type="button" ng-click="deletteCrop(Item)" class="btn btn-danger">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+
+
+
+
+
+                                    </td>
+                                </tr>
+<tbody>
                         </table>
 
 

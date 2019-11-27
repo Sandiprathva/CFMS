@@ -87,21 +87,27 @@
 
                         }
 
-                        <div class="form-group">
-                            <label for="name">Name:</label>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
 
-                            <select class="custom-select" ng-model="ItemMasert.cpid" required ng-blur="SelectCrop()">
-                                <option value="" selected>-- Select Crop Name /Item Name --</option>
-                                <option ng-repeat="st in san| filter : ItemMasert.ItypeId" value="{{st.cpid}}">{{st.cpname}}</option>
-                            </select>
+                        <select class="custom-select" ng-model="ItemMasert.cpid" required ng-blur="SelectCrop()" ng-if="ItemMasert.ItypeId==1">
+                            <option value="" selected>-- Select Crop Name /Item Name --</option>
+                            <option ng-repeat="st in sann " value="{{st.cpid}}" ng-hide="st.ItypeId==2">{{st.cpname}}</option>
+                        </select>
+                        <select class="custom-select" ng-model="ItemMasert.cpid" required ng-blur="SelectCrop()" ng-if="ItemMasert.ItypeId==2">
+                            <option value="" selected>-- Select Crop Name /Item Name --</option>
+                            <option ng-repeat="st in sann | filter : ItemMasert.ItypeId" value="{{st.cpid}}">{{st.cpname}}</option>
+                        </select>
 
 
-                            @*<input type="text" ng-model="ItemMasert.name" name="name" placeholder="Item Name" class="form-control" required pattern="^[A-Z]{1}[a-z ]{0,20}$">
-            @*<span ng-show="ItemFrom.name.$dirty && ItemFrom.name.$error.required" class="text-danger">Item Name is Required !</span>
-            <span ng-show="ItemFrom.name.$dirty && ItemFrom.name.$error.pattern" class="text-danger">First letter should be capital...Only 20 characters are allowed...No special characters allowed</span>*@
 
 
-                        </div>
+                        @*<input type="text" ng-model="ItemMasert.name" name="name" placeholder="Item Name" class="form-control" required pattern="^[A-Z]{1}[a-z ]{0,20}$">
+        @*<span ng-show="ItemFrom.name.$dirty && ItemFrom.name.$error.required" class="text-danger">Item Name is Required !</span>
+        <span ng-show="ItemFrom.name.$dirty && ItemFrom.name.$error.pattern" class="text-danger">First letter should be capital...Only 20 characters are allowed...No special characters allowed</span>*@
+
+
+                    </div>
 
                         <div class="form-group" ng-hide="ItemMasert.ItypeId==2 ||  ItemMasert.ItypeId==3">
                             <label for="name">Varity Name:</label>
